@@ -90,3 +90,10 @@ stefan.greet_user()
 stefan.describe_user()
 rebecca.greet_user()
 rebecca.describe_user()
+
+# 9.4 - Number Served
+excercise = "9.4 - Number Served"
+print("\n#--------------------------------------------------#")
+print("\t" + excercise.upper() + "\t")
+print("#--------------------------------------------------#\n")
+
