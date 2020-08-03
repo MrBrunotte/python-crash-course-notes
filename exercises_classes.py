@@ -4,7 +4,7 @@ You work with INSTANCES of a class
 '''
 
 # 9.1 - Restaurant
-from random import randint
+from random import randint, choice
 from module.user import User
 from classes.my_restaurant import Restaurant
 from restaurant import Restaurant
@@ -435,7 +435,7 @@ class Car:
 
     def update_odometer(self, mileage):
         """ A method that updates the odomenter with the given value
-            Reject the change if it attempts to roll the odometer back 
+            Reject the change if it attempts to roll the odometer back
         """
         if mileage >= self.odometer_reading:
             self.odometer_reading = mileage
@@ -550,11 +550,11 @@ print("\n#--------------------------------------------------#")
 print("\t" + excercise.upper() + "\t")
 print("#--------------------------------------------------#\n")
 
-#from random import randint
+# from random import randint
 x = randint(1, 6)
 
 
-class Dice():
+class Die():
     """ Method that rolls a dice and displays a random side from 1-6 """
 
     def __init__(self, sides=6):
@@ -562,4 +562,155 @@ class Dice():
         self.sides = sides
 
     def roll_die(self):
-        """"""
+        """method that returns a random number between 1 and the number of sides"""
+        return randint(1, self.sides)
+
+
+print("Import: from random import randint\n")
+print("Steps taken to for this exercise:")
+print("\n\t1. Make an instance of the Die class")
+print("\t2. Make an empty list called results to store the die-rolls")
+print("\t3. for loop that loops through a range of 10 rolls")
+print("\t3.1 call the roll_die method to the d6 instance and store each roll in a variable called result")
+print("\t3.2 append each roll from the variable result and put it in results")
+print("\t4. print a message")
+print("\t4. print the random rolls from the variable results\n")
+
+# make a 6-sided die, and show the results of 10 rolls.
+# Maka an instance of the class
+d6 = Die()
+results = []
+
+for roll_num in range(10):
+    result = d6.roll_die()
+    results.append(result)
+print("10 rolls of a 6-sided die")
+print(results)
+
+d10 = Die(sides=10)
+results = []
+
+for roll_num in range(10):
+    result = d10.roll_die()
+    results.append(result)
+print("\n10 rolls of a 10-sided die")
+print(results)
+
+
+d20 = Die(sides=20)
+
+results = []
+
+for roll_num in range(10):
+    result = d20.roll_die()
+    results.append(result)
+print("\n10 rolls of a 20-sided die")
+print(results)
+
+
+# 9.14 - Lottery
+excercise = "9.14 - Lottery"
+print("\n#--------------------------------------------------#")
+print("\t" + excercise.upper() + "\t")
+print("#--------------------------------------------------#\n")
+
+
+possibilities = [1, 2, 'b']
+
+winning_ticket = []
+my_ticket = []
+
+print("Let's see my ticket...")
+while len(my_ticket) < 2:
+    pulled_item = choice(possibilities)
+
+    if pulled_item not in my_ticket:
+        print(f"  I pulled a \t{pulled_item}!")
+        my_ticket.append(pulled_item)
+
+print("\nLet's see what the winning ticket is...")
+
+while len(winning_ticket) < 2:
+    pulled_item = choice(possibilities)
+
+    if pulled_item not in winning_ticket:
+        print(f"  We pulled a \t{pulled_item}!")
+        winning_ticket.append(pulled_item)
+
+if my_ticket == winning_ticket:
+    print(
+        f"\nFantastic!! You won! \nmy ticket: {my_ticket} = winning ticket {winning_ticket}")
+else:
+    print(
+        f"\nSorry, your tickets didn't match!\nmy ticket: {my_ticket} = winning ticket {winning_ticket}")
+
+# 9.14 - Lottery Analysis
+excercise = "9.14 - Lottery Analysis"
+print("\n#--------------------------------------------------#")
+print("\t" + excercise.upper() + "\t")
+print("#--------------------------------------------------#\n")
+
+
+def get_winning_ticket(possibilities):
+    """Return a winning ticket from a set of possibilities"""
+    winning_ticket = []
+
+    while len(winning_ticket) < 4:
+        pulled_item = choice(possibilities)
+
+        if pulled_item not in winning_ticket:
+            winning_ticket.append(pulled_item)
+
+    return winning_ticket
+
+
+def check_ticket(played_ticket, winning_ticket):
+    """Check all elements in the played ticket. If any or not in the winning ticket, return False"""
+
+    for element in played_ticket:
+        if element not in winning_ticket:
+            return False
+    # if element in winning_ticket
+    return True
+
+
+def make_random_ticket(possibilities):
+    """Return a random ticket from a set of possibilties"""
+    ticket = []
+
+    while len(ticket) < 4:
+        pulled_item = choice(possibilities)
+
+        if pulled_item not in ticket:
+            ticket.append(pulled_item)
+
+    return ticket
+
+
+possibilities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'a', 'b', 'c', 'd', 'e']
+
+# call method
+winning_ticket = get_winning_ticket(possibilities)
+
+plays = 0
+won = False
+
+# max tries
+max_tries = 1_000_000
+
+while not won:
+    new_ticket = make_random_ticket(possibilities)
+    won = check_ticket(new_ticket, winning_ticket)
+    plays += 1
+    if plays >= max_tries:
+        break
+
+if won:
+    print("We have a winning ticket!")
+    print(f"Your ticket: {new_ticket}")
+    print(f"Winning ticket: {winning_ticket}")
+    print(f"It only took {plays} tries to win!")
+else:
+    print(f"Tried {plays} times, without pulling a winner. :(")
+    print(f"Your ticket: {new_ticket}")
+    print(f"Winning ticket: {winning_ticket}")
